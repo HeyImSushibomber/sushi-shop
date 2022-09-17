@@ -31,6 +31,7 @@ const App = () => {
       products: [],
     },
   ];
+
   return (
     <>
       <CategoryList categories={categories}></CategoryList>
