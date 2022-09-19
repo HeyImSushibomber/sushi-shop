@@ -1,12 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 import {
-  getAuth,
-  signInWithPopup,
-  // createUserWithEmailAndPassword,
-  // signInWithEmailAndPassword,
-  GoogleAuthProvider,
-} from "firebase/auth";
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -24,35 +26,29 @@ const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
+const db = getFirestore(firebaseApp);
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(firebaseApp);
 
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed in
-//     const user = userCredential.user;
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.errorMessage;
-
-//     console.log("errorCode:", errorCode, "errorMessage:", errorMessage);
-//   });
-
-// export const signInWithGooglePopup = () =>
-//   signInWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//       // Signed in
-//       const user = userCredential.user;
-//       // ...
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-
-//       console.log("errorCode:", errorCode, "errorMessage:", errorMessage);
-//     });
-
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
+
+export const createUserDocumentFromAuth = async ({ user }) => {
+  const userDocRef = doc(db, "users", user.uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (!userDocSnap.exists()) {
+    try {
+      await setDoc(userDocRef, {
+        displayName: user.displayName,
+        email: user.email,
+        createdAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log("error creating user using google sign in", error);
+    }
+  }
+
+  return userDocRef;
+};
