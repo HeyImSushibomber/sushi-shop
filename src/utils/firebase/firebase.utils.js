@@ -1,6 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  signInWithRedirect,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 import {
   getFirestore,
@@ -8,6 +15,7 @@ import {
   getDoc,
   setDoc,
   serverTimestamp,
+  collection,
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -27,23 +35,52 @@ googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 const db = getFirestore(firebaseApp);
-
-// Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(firebaseApp);
 
+// SIGN IN
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
 
-export const createUserDocumentFromAuth = async ({ user }) => {
-  const userDocRef = doc(db, "users", user.uid);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
+
+export const signInAuthWithEmailAndPassword = (email, password) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      console.log(user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("error occured while logging in", errorCode, errorMessage);
+    });
+};
+
+// CREATE
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInformation = {}
+) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
   const userDocSnap = await getDoc(userDocRef);
 
   if (!userDocSnap.exists()) {
+    const { displayName, email } = userAuth;
+
     try {
       await setDoc(userDocRef, {
-        displayName: user.displayName,
-        email: user.email,
+        displayName: displayName,
+        email: email,
         createdAt: serverTimestamp(),
+        ...additionalInformation,
       });
     } catch (error) {
       console.log("error creating user using google sign in", error);

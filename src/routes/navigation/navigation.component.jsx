@@ -11,7 +11,7 @@ const Navigation = () => {
           <img src={logo} alt="logo" className="logo"></img>
         </Link>
         <div className="nav-links-container">
-          <NavLink className="nav-link" to="login">
+          <NavLink className="nav-link" to="authentication">
             Login
           </NavLink>
         </div>

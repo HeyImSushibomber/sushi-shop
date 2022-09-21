@@ -10,7 +10,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/home/home.component";
 import Menu from "./routes/menu/menu.component";
 import Contact from "./routes/contact/contact.component";
-import Login from "./routes/login/login.component";
+import Authentication from "./routes/authentication/authentication.component";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +30,8 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "login",
-        element: <Login />,
+        path: "authentication",
+        element: <Authentication />,
       },
     ],
     errorElement: <ErrorPage />,
