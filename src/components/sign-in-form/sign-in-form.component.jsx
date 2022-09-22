@@ -48,8 +48,8 @@ const SignInForm = () => {
 
   return (
     <div className="sign-in-container">
-      <h2>I already have an account</h2>
-      <h3>Sign in with your email and password</h3>
+      <h2>Already have an account?</h2>
+      <p>Sign in with your email and password</p>
 
       <form
         name="signInForm"

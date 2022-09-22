@@ -47,8 +47,8 @@ const SignUpForm = () => {
 
   return (
     <div className="sign-up-container">
-      <h2>I do not have a account</h2>
-      <h3>Sign up with your email and password</h3>
+      <h2>Don't have an account?</h2>
+      <p>Sign up with your email and password</p>
 
       <form
         name="signUpForm"
