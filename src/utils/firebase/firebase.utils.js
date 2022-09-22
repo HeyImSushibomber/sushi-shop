@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 
 import {
@@ -15,7 +16,6 @@ import {
   getDoc,
   setDoc,
   serverTimestamp,
-  collection,
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -44,19 +44,17 @@ export const signInWithGooglePopup = () =>
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
-export const signInAuthWithEmailAndPassword = (email, password) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch((error) => {
+export const signInAuthWithEmailAndPassword = async (email, password) => {
+  return await signInWithEmailAndPassword(auth, email, password).catch(
+    (error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("error occured while logging in", errorCode, errorMessage);
-    });
+    }
+  );
 };
+
+export const signOutAuth = async () => await signOut(auth);
 
 // CREATE
 export const createAuthUserWithEmailAndPassword = async (email, password) => {

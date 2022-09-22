@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getRedirectResult, getAuth } from "firebase/auth";
 
 import {
@@ -11,6 +11,7 @@ import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
 import "./sign-in-form.styles.scss";
+import { UserProvider, useUser } from "../../context/user-context";
 
 const auth = getAuth();
 const defaultSignInInfo = {
@@ -21,6 +22,8 @@ const defaultSignInInfo = {
 const SignInForm = () => {
   const [signInInfo, setSignInfo] = useState(defaultSignInInfo);
   const { email, password } = signInInfo;
+
+  const { setUser } = useUser(UserProvider);
 
   useEffect(() => {
     const fetchUserSignIn = async () => {
@@ -38,7 +41,8 @@ const SignInForm = () => {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    await signInAuthWithEmailAndPassword(email, password);
+    const response = await signInAuthWithEmailAndPassword(email, password);
+    setUser(response);
   };
 
   const handleOnChange = (event) => {

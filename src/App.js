@@ -1,9 +1,12 @@
+import { UserProvider } from "./context/user-context";
 import Navigation from "./routes/navigation/navigation.component";
 
 const App = () => {
   return (
     <>
-      <Navigation />
+      <UserProvider>
+        <Navigation />
+      </UserProvider>
     </>
   );
 };
