@@ -33,9 +33,9 @@ const UserProvider = ({ children }) => {
         <Confetti
           width={width}
           height={height}
-          initialVelocityX={3}
-          initialVelocityY={5}
-          numberOfPieces={200}
+          initialVelocityX={5}
+          initialVelocityY={10}
+          numberOfPieces={300}
           recycle={false}
         ></Confetti>
       ) : (
