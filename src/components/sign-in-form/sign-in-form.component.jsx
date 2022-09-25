@@ -1,19 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { getRedirectResult, getAuth } from "firebase/auth";
+import { useState } from "react";
 
 import {
   signInWithGooglePopup,
   signInAuthWithEmailAndPassword,
-  //   signInWithGoogleRedirect,
-  createUserDocumentFromAuth,
 } from "./../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
 import "./sign-in-form.styles.scss";
-import { UserProvider, useUser } from "../../context/user-context";
 
-const auth = getAuth();
 const defaultSignInInfo = {
   email: "",
   password: "",
@@ -23,26 +18,16 @@ const SignInForm = () => {
   const [signInInfo, setSignInfo] = useState(defaultSignInInfo);
   const { email, password } = signInInfo;
 
-  const { setUser } = useUser(UserProvider);
-
-  useEffect(() => {
-    const fetchUserSignIn = async () => {
-      const response = await getRedirectResult(auth);
-      if (response) createUserDocumentFromAuth(response.user);
-    };
-
-    fetchUserSignIn();
-  }, []);
+  const resetForm = () => setSignInfo(defaultSignInInfo);
 
   const handleOnClick = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     const response = await signInAuthWithEmailAndPassword(email, password);
-    setUser(response);
+    if (response) resetForm();
   };
 
   const handleOnChange = (event) => {

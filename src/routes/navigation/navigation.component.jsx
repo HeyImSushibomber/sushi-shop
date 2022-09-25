@@ -6,7 +6,7 @@ import { signOutAuth } from "../../utils/firebase/firebase.utils";
 import "./navigation.styles.scss";
 
 const Navigation = () => {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
 
   return (
     <>
@@ -20,7 +20,6 @@ const Navigation = () => {
               className="nav-link"
               onClick={async () => {
                 await signOutAuth();
-                setUser(null);
               }}
             >
               Sign Out
