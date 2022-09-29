@@ -6,30 +6,31 @@ import {
 
 import Confetti from "react-confetti";
 import { useWindowSize } from "usehooks-ts";
+import useHasLoggedIn from "../utils/useLoggedIn";
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
+  const { hasLoggedIn, enable } = useHasLoggedIn();
   const { width, height } = useWindowSize();
 
   const [user, setCurrentUser] = useState(null);
-  const value = { user, setCurrentUser };
+  const value = { user, setCurrentUser, hasLoggedIn, enable };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
+      if (user) createUserDocumentFromAuth(user);
+
       setCurrentUser(user);
     });
 
     return unsubscribe;
-  }, []);
+  }, [hasLoggedIn]);
 
   return (
     <UserContext.Provider value={value}>
       {children}
-      {user ? (
+      {user && hasLoggedIn ? (
         <Confetti
           width={width}
           height={height}

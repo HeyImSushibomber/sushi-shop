@@ -1,12 +1,16 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 import logo from "../../assets/heyImSushiBomber.jpg";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import { useCartDropdown } from "../../context/cart-dropdown-context";
 import { useUser } from "../../context/user-context";
 import { signOutAuth } from "../../utils/firebase/firebase.utils";
 import "./navigation.styles.scss";
 
 const Navigation = () => {
   const { user } = useUser();
+  const { isCartOpen } = useCartDropdown();
 
   return (
     <>
@@ -14,6 +18,9 @@ const Navigation = () => {
         <Link className="logo-container" to="/">
           <img src={logo} alt="logo" className="logo"></img>
         </Link>
+        <div className="nav-links-container">
+          <CartIcon />
+        </div>
         <div className="nav-links-container">
           {user ? (
             <span
@@ -40,6 +47,7 @@ const Navigation = () => {
             Menu
           </NavLink>
         </div>
+        {isCartOpen && <CartDropdown />}
       </div>
       <Outlet />
     </>

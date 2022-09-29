@@ -7,16 +7,14 @@ const BUTTON_STYLES_CLASS = {
 
 const Button = ({ children, buttonType, ...otherProps }) => {
   return (
-    <div>
-      <button
-        className={`button-container${
-          buttonType ? " " + BUTTON_STYLES_CLASS[buttonType] : ""
-        }`}
-        {...otherProps}
-      >
-        {children}
-      </button>
-    </div>
+    <button
+      className={`button-container${
+        buttonType ? " " + BUTTON_STYLES_CLASS[buttonType] : ""
+      }`}
+      {...otherProps}
+    >
+      {children}
+    </button>
   );
 };
 

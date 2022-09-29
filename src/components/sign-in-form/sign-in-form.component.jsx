@@ -27,7 +27,9 @@ const SignInForm = () => {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     const response = await signInAuthWithEmailAndPassword(email, password);
-    if (response) resetForm();
+    if (response) {
+      resetForm();
+    }
   };
 
   const handleOnChange = (event) => {
