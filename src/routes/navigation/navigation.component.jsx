@@ -3,14 +3,14 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "../../assets/heyImSushiBomber.jpg";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
-import { useCartDropdown } from "../../context/cart-dropdown-context";
+import { useCart } from "../../context/cart-context";
 import { useUser } from "../../context/user-context";
 import { signOutAuth } from "../../utils/firebase/firebase.utils";
 import "./navigation.styles.scss";
 
 const Navigation = () => {
   const { user } = useUser();
-  const { isCartOpen } = useCartDropdown();
+  const { isCartOpen } = useCart();
 
   return (
     <>

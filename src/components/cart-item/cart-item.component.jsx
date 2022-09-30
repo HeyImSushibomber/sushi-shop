@@ -1,8 +1,8 @@
-import { useCartDropdown } from "../../context/cart-dropdown-context";
+import { useCart } from "../../context/cart-context";
 import "./cart-item.styles.scss";
 
 const CartItem = ({ cartItem }) => {
-  const { addToCart, removeFromCart } = useCartDropdown();
+  const { addToCart, removeFromCart } = useCart();
 
   const { name, price, quantity, imageUrl } = cartItem;
 

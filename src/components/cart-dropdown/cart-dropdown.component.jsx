@@ -1,10 +1,11 @@
-import { useCartDropdown } from "../../context/cart-dropdown-context";
+import { Link } from "react-router-dom";
+import { useCart } from "../../context/cart-context";
 import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 import "./cart-dropdown.styles.scss";
 
 const CartDropdown = () => {
-  const { cart } = useCartDropdown();
+  const { cart, toggleIsCartOpen } = useCart();
 
   return (
     <div className="cart-dropdown-container">
@@ -15,7 +16,11 @@ const CartDropdown = () => {
           <span className="empty-message">Cart is Empty</span>
         )}
       </div>
-      <Button>CHECKOUT</Button>
+      <div>
+        <Link to="checkout">
+          <Button onClick={toggleIsCartOpen}>CHECKOUT</Button>
+        </Link>
+      </div>
     </div>
   );
 };

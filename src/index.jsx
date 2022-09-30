@@ -11,6 +11,7 @@ import Home from "./routes/home/home.component";
 import Menu from "./routes/menu/menu.component";
 import Contact from "./routes/contact/contact.component";
 import Authentication from "./routes/authentication/authentication.component";
+import Checkout from "./routes/checkout/checkout.component";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "authentication",
         element: <Authentication />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
     errorElement: <ErrorPage />,
