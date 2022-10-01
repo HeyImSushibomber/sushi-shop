@@ -17,7 +17,7 @@ const CartItem = ({ cartItem }) => {
         <span>
           {quantity} x ${price}
         </span>
-        <span>
+        <span className="item-manage">
           <button onClick={removeItemFromCart}>-</button>
           <button onClick={addItemToCart}>+</button>
         </span>

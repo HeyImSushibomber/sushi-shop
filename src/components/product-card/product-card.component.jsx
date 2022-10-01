@@ -1,12 +1,17 @@
 import "./product-card.styles.scss";
 import Button from "../button/button.component";
 import { useCart } from "../../context/cart-context";
+import { Toast, useToastControls } from "../../store/toasts";
 
 const ProductCard = ({ product }) => {
   const { name, imageUrl, price } = product;
   const { addToCart } = useCart();
+  const { show } = useToastControls();
 
-  const addProductToCart = () => addToCart(product);
+  const addProductToCart = () => {
+    show(name);
+    addToCart(product);
+  };
 
   return (
     <div className="product-card-container">
@@ -18,6 +23,7 @@ const ProductCard = ({ product }) => {
       <Button buttonType="inverted" onClick={addProductToCart}>
         Add to cart
       </Button>
+      <Toast uniqueId={name}>{name} has been added to the cart!</Toast>
     </div>
   );
 };
