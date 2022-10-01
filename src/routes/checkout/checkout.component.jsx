@@ -10,7 +10,7 @@ const Checkout = () => {
     <div className="checkout-container">
       <div className="checkout-header">
         {headers.map((header) => (
-          <div className="header-block">
+          <div className="header-block" key={header}>
             <span>{header}</span>
           </div>
         ))}
