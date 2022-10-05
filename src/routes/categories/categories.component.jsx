@@ -3,7 +3,7 @@ import ProductCard from "../../components/product-card/product-card.component";
 import { useCategories } from "../../context/categories-context";
 import { useState, useEffect } from "react";
 
-const Category = () => {
+const Categories = () => {
   const { category } = useParams();
   const { categoriesMap } = useCategories();
 
@@ -26,4 +26,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Categories;

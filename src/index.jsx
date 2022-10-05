@@ -12,7 +12,7 @@ import Menu from "./routes/menu/menu.component";
 import Contact from "./routes/contact/contact.component";
 import Authentication from "./routes/authentication/authentication.component";
 import Checkout from "./routes/checkout/checkout.component";
-import Category from "./routes/category/category.component";
+import Categories from "./routes/categories/categories.component";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "menu/:category",
-        element: <Category />,
+        element: <Categories />,
       },
       {
         path: "contact",
