@@ -1,4 +1,6 @@
 // Import the functions you need from the SDKs you need
+
+import { SHOP_DATA } from "../../shop-data";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -17,6 +19,10 @@ import {
   getDoc,
   setDoc,
   serverTimestamp,
+  writeBatch,
+  collection,
+  query,
+  getDocs,
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -37,6 +43,36 @@ googleProvider.setCustomParameters({
 });
 const db = getFirestore(firebaseApp);
 export const auth = getAuth(firebaseApp);
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const { title } = object;
+    const docRef = doc(collectionRef, title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("batch done");
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, doc) => {
+    const { title, items } = doc.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+  return categoryMap;
+};
 
 // SIGN IN
 export const signInWithGooglePopup = () =>

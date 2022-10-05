@@ -51,8 +51,6 @@ export function Toast(props) {
 
   const isShown = toastList.has(uniqueId);
 
-  console.log(toastList, isShown);
-
   useEffect(() => {
     if (!duration || !isShown) {
       return;

@@ -1,17 +1,20 @@
-import ProductCard from "../../components/product-card/product-card.component";
-import { useProducts } from "../../context/products-context";
+import CategoryPreview from "../../components/category-preview/category-preview.component";
+import { useCategories } from "../../context/categories-context";
 
 import "./menu.styles.scss";
 
 const Menu = () => {
-  const { products } = useProducts();
+  const { categoriesMap } = useCategories();
 
   return (
-    <div className="products-container">
-      {products.map((product) => {
-        return <ProductCard key={product.id} product={product}></ProductCard>;
+    <>
+      {Object.keys(categoriesMap).map((category) => {
+        const items = categoriesMap[category];
+        return (
+          <CategoryPreview key={category} title={category} products={items} />
+        );
       })}
-    </div>
+    </>
   );
 };
 export default Menu;
