@@ -5,7 +5,7 @@ const CategoryList = ({ categories }) => {
   return (
     <div className="categories-container">
       {categories.map((category, index) => (
-        <CategoryItem key={index} category={category} />
+        <CategoryItem key={index} category={category}></CategoryItem>
       ))}
     </div>
   );

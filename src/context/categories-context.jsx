@@ -4,16 +4,27 @@ import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils";
 
 const CategoriesContext = createContext({
   categoriesMap: {},
+  categories: [],
 });
 
 const CategoriesProvider = ({ children }) => {
   const [categoriesMap, setCategoriesMap] = useState({});
-  const value = { categoriesMap, setCategoriesMap };
+  const [categories, setCategories] = useState([]);
+  const value = { categoriesMap, categories };
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const categories = await getCategoriesAndDocuments();
-      setCategoriesMap(categories);
+      const categoriesMap = await getCategoriesAndDocuments();
+      const categoriesArray = Object.keys(categoriesMap).map((title) => {
+        const products = categoriesMap[title];
+
+        return {
+          title,
+          products: products,
+        };
+      });
+      setCategories(categoriesArray);
+      setCategoriesMap(categoriesMap);
     };
 
     fetchCategories();

@@ -6,37 +6,12 @@ import Hosomakis from "../.././assets/hosomakis.jpg";
 import BubbleTea from "../.././assets/bubble-tea.jpg";
 import PokeBowl from "../.././assets/poke-bowl.jpg";
 import Desserts from "../.././assets/desserts.jpeg";
+import { useCategories } from "../../context/categories-context";
 
 export { Futomakis, Hosomakis, BubbleTea, PokeBowl, Desserts };
 
 const Home = () => {
-  const categories = [
-    {
-      title: "Futomakis",
-      productImage: Futomakis,
-      products: [],
-    },
-    {
-      title: "Hosomakis",
-      productImage: Hosomakis,
-      products: [],
-    },
-    {
-      title: "Poke bowl",
-      productImage: PokeBowl,
-      products: [],
-    },
-    {
-      title: "Bubble Tea",
-      productImage: BubbleTea,
-      products: [],
-    },
-    {
-      title: "Desserts",
-      productImage: Desserts,
-      products: [],
-    },
-  ];
+  const { categories } = useCategories();
 
   return (
     <>
