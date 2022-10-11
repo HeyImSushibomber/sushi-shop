@@ -18,8 +18,6 @@ const CategoriesProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const value = { categoriesMap, categories };
 
-  console.log(categories);
-
   useEffect(() => {
     const fetchCategories = async () => {
       const categoriesMap = await getCategoriesAndDocuments();
