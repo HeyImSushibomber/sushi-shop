@@ -1,21 +1,23 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./category-item.styles.scss";
 
 const CategoryItem = ({ category }) => {
-  const { title, productImage, products } = category;
+  const { title, categoryImage, products, route } = category;
+
+  const navigate = useNavigate();
+
+  const onNavigateHandler = () => navigate(route);
 
   return (
-    <div className="category-container">
-      <Link to={`menu/${category.title}`}>
-        <div
-          className="background-image"
-          style={{ backgroundImage: `url(${productImage})` }}
-        />
-        <div className="category-body-container">
-          <h2>{title}</h2>
-          <p>{products.length} product(s)</p>
-        </div>
-      </Link>
+    <div className="category-container" onClick={onNavigateHandler}>
+      <div
+        className="background-image"
+        style={{ backgroundImage: `url(${categoryImage})` }}
+      />
+      <div className="category-body-container">
+        <h2>{title}</h2>
+        <p>{products.length} product(s)</p>
+      </div>
     </div>
   );
 };

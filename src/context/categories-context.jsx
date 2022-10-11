@@ -7,10 +7,18 @@ const CategoriesContext = createContext({
   categories: [],
 });
 
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+};
+
 const CategoriesProvider = ({ children }) => {
   const [categoriesMap, setCategoriesMap] = useState({});
   const [categories, setCategories] = useState([]);
   const value = { categoriesMap, categories };
+
+  console.log(categories);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -21,6 +29,8 @@ const CategoriesProvider = ({ children }) => {
         return {
           title,
           products: products,
+          route: `menu/${title}`,
+          categoryImage: products[getRandomInt(0, products.length)].imageUrl,
         };
       });
       setCategories(categoriesArray);

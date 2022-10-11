@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import logo from "../../assets/heyImSushiBomber.jpg";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
@@ -6,7 +6,7 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 import { useCart } from "../../context/cart-context";
 import { useUser } from "../../context/user-context";
 import { signOutAuth } from "../../utils/firebase/firebase.utils";
-import "./navigation.styles.scss";
+import * as Styled from "./navigation.styles";
 
 const Navigation = () => {
   const { user } = useUser();
@@ -14,41 +14,34 @@ const Navigation = () => {
 
   return (
     <>
-      <div className="navigation">
-        <Link className="logo-container" to="/">
-          <img src={logo} alt="logo" className="logo"></img>
-        </Link>
-        <div className="nav-links-container">
+      <Styled.NavigationContainer>
+        <Styled.LogoContainer to="/">
+          <Styled.Logo src={logo} alt="logo"></Styled.Logo>
+        </Styled.LogoContainer>
+        <Styled.NavLinks>
           <CartIcon />
-        </div>
-        <div className="nav-links-container">
+        </Styled.NavLinks>
+        <Styled.NavLinks>
           {user ? (
-            <span
-              className="nav-link"
+            <Styled.NavLink
               onClick={async () => {
                 await signOutAuth();
               }}
             >
               Sign Out
-            </span>
+            </Styled.NavLink>
           ) : (
-            <NavLink className="nav-link" to="authentication">
-              Sign In
-            </NavLink>
+            <Styled.NavLink to="authentication">Sign In</Styled.NavLink>
           )}
-        </div>
-        <div className="nav-links-container">
-          <NavLink className="nav-link" to="contact">
-            Contact
-          </NavLink>
-        </div>
-        <div className="nav-links-container">
-          <NavLink className="nav-link" to="menu">
-            Menu
-          </NavLink>
-        </div>
+        </Styled.NavLinks>
+        <Styled.NavLinks>
+          <Styled.NavLink to="contact">Contact</Styled.NavLink>
+        </Styled.NavLinks>
+        <Styled.NavLinks>
+          <Styled.NavLink to="menu">Shop</Styled.NavLink>
+        </Styled.NavLinks>
         {isCartOpen && <CartDropdown />}
-      </div>
+      </Styled.NavigationContainer>
       <Outlet />
     </>
   );
