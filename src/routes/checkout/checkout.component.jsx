@@ -5,7 +5,7 @@ import CheckoutItem from "../../components/checkout-item/checkout-item.component
 const headers = ["Product", "Description", "Quantity", "Price", "Remove"];
 
 const Checkout = () => {
-  const { cart, totalPrice } = useCart();
+  const { cartItems, cartTotal } = useCart();
   return (
     <div className="checkout-container">
       <div className="checkout-header">
@@ -15,11 +15,11 @@ const Checkout = () => {
           </div>
         ))}
       </div>
-      {cart.map((cartItem) => (
+      {cartItems.map((cartItem) => (
         <CheckoutItem cartItem={cartItem} key={cartItem.id} />
       ))}
 
-      <span className="total">Total Price: ${totalPrice}</span>
+      <span className="total">Total Price: ${cartTotal}</span>
     </div>
   );
 };

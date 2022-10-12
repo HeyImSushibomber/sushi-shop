@@ -9,7 +9,7 @@ import { signOutAuth } from "../../utils/firebase/firebase.utils";
 import * as Styled from "./navigation.styles";
 
 const Navigation = () => {
-  const { user } = useUser();
+  const { currentUser } = useUser();
   const { isCartOpen } = useCart();
 
   return (
@@ -22,7 +22,7 @@ const Navigation = () => {
           <CartIcon />
         </Styled.NavLinks>
         <Styled.NavLinks>
-          {user ? (
+          {currentUser ? (
             <Styled.NavLink
               onClick={async () => {
                 await signOutAuth();

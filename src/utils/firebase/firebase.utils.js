@@ -1,6 +1,3 @@
-// Import the functions you need from the SDKs you need
-
-import { SHOP_DATA } from "../../shop-data";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,

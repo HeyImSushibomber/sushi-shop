@@ -2,12 +2,8 @@ import { useCart } from "../../context/cart-context";
 import "./cart-item.styles.scss";
 
 const CartItem = ({ cartItem }) => {
-  const { addToCart, removeFromCart } = useCart();
-
+  const { addItemToCart, removeItemToCart } = useCart();
   const { name, price, quantity, imageUrl } = cartItem;
-
-  const addItemToCart = () => addToCart(cartItem);
-  const removeItemFromCart = () => removeFromCart(cartItem);
 
   return (
     <div className="cart-item-container">
@@ -18,8 +14,8 @@ const CartItem = ({ cartItem }) => {
           {quantity} x ${price}
         </span>
         <span className="item-manage">
-          <button onClick={removeItemFromCart}>-</button>
-          <button onClick={addItemToCart}>+</button>
+          <button onClick={() => removeItemToCart(cartItem)}>-</button>
+          <button onClick={() => addItemToCart(cartItem)}>+</button>
         </span>
       </div>
     </div>

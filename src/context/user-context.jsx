@@ -1,21 +1,38 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
 } from "../utils/firebase/firebase.utils";
 
-import Confetti from "react-confetti";
-import { useWindowSize } from "usehooks-ts";
-import useHasLoggedIn from "../utils/useLoggedIn";
-
 const UserContext = createContext();
 
-const UserProvider = ({ children }) => {
-  const { hasLoggedIn, enable } = useHasLoggedIn();
-  const { width, height } = useWindowSize();
+const actionTypes = {
+  setCurrentUser: "SET_CURRENT_USER",
+};
 
-  const [user, setCurrentUser] = useState(null);
-  const value = { user, setCurrentUser, hasLoggedIn, enable };
+const INITIAL_USER_STATE = {
+  currentUser: null,
+};
+
+function userReducer(state, action) {
+  const { type, payload } = action;
+
+  switch (type) {
+    case actionTypes.setCurrentUser:
+      return { ...state, currentUser: payload };
+    default:
+      throw new Error(`Invalid use of UserReducer: ${type} is not valid`);
+  }
+}
+
+const UserProvider = ({ children }, { reducer = userReducer } = {}) => {
+  const [{ currentUser }, dispatch] = useReducer(reducer, INITIAL_USER_STATE);
+
+  const setCurrentUser = (user) => {
+    dispatch({ type: actionTypes.setCurrentUser, payload: user });
+  };
+
+  const value = { currentUser, setCurrentUser };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
@@ -25,25 +42,9 @@ const UserProvider = ({ children }) => {
     });
 
     return unsubscribe;
-  }, [hasLoggedIn]);
+  }, []);
 
-  return (
-    <UserContext.Provider value={value}>
-      {children}
-      {user && hasLoggedIn ? (
-        <Confetti
-          width={width}
-          height={height}
-          initialVelocityX={5}
-          initialVelocityY={10}
-          numberOfPieces={300}
-          recycle={false}
-        ></Confetti>
-      ) : (
-        ""
-      )}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 const useUser = () => {
