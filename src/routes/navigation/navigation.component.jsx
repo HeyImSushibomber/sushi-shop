@@ -4,13 +4,17 @@ import logo from "../../assets/heyImSushiBomber.jpg";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import { useCart } from "../../context/cart-context";
-import { useUser } from "../../context/user-context";
+
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/userSlice";
 import { signOutAuth } from "../../utils/firebase/firebase.utils";
 import * as Styled from "./navigation.styles";
 
 const Navigation = () => {
-  const { currentUser } = useUser();
+  const currentUser = useSelector(selectCurrentUser);
   const { isCartOpen } = useCart();
+
+  console.log(currentUser);
 
   return (
     <>

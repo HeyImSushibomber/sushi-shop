@@ -14,6 +14,9 @@ import Authentication from "./routes/authentication/authentication.component";
 import Checkout from "./routes/checkout/checkout.component";
 import Categories from "./routes/categories/categories.component";
 
+import store from "./store/store";
+import { Provider } from "react-redux";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,7 +54,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
