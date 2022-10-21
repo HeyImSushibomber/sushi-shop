@@ -3,18 +3,16 @@ import { Outlet } from "react-router-dom";
 import logo from "../../assets/heyImSushiBomber.jpg";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
-import { useCart } from "../../context/cart-context";
 
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/userSlice";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { signOutAuth } from "../../utils/firebase/firebase.utils";
 import * as Styled from "./navigation.styles";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const { isCartOpen } = useCart();
-
-  console.log(currentUser);
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   return (
     <>

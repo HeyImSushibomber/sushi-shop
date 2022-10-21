@@ -1,17 +1,10 @@
 import CategoryList from "../../components/category-list/category-list.component";
 
-// Menu Images
-import Futomakis from "../.././assets/futomakis.jpg";
-import Hosomakis from "../.././assets/hosomakis.jpg";
-import BubbleTea from "../.././assets/bubble-tea.jpg";
-import PokeBowl from "../.././assets/poke-bowl.jpg";
-import Desserts from "../.././assets/desserts.jpeg";
-import { useCategories } from "../../context/categories-context";
-
-export { Futomakis, Hosomakis, BubbleTea, PokeBowl, Desserts };
+import { useSelector } from "react-redux";
+import { selectCategories } from "../../store/categories/categories.selector";
 
 const Home = () => {
-  const { categories } = useCategories();
+  const categories = useSelector(selectCategories);
 
   return (
     <>

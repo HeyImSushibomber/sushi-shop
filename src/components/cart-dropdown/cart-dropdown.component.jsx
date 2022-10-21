@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../../context/cart-context";
+
+import { useSelector } from "react-redux";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cartSlice";
+
 import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 import "./cart-dropdown.styles.scss";
 
 const CartDropdown = () => {
-  const { cartItems, setCartIsOpen } = useCart();
+  const cartItems = useSelector(selectCartItems);
 
   return (
     <div className="cart-dropdown-container">
@@ -18,7 +22,7 @@ const CartDropdown = () => {
       </div>
       <div>
         <Link to="checkout">
-          <Button onClick={setCartIsOpen}>CHECKOUT</Button>
+          <Button onClick={setIsCartOpen}>CHECKOUT</Button>
         </Link>
       </div>
     </div>

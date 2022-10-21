@@ -1,8 +1,12 @@
-import { useCart } from "../../context/cart-context";
+import { addItemToCart, removeItemToCart } from "../../store/cart/cart.action";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItems } from "../../store/cart/cart.selector";
+
 import "./cart-item.styles.scss";
 
 const CartItem = ({ cartItem }) => {
-  const { addItemToCart, removeItemToCart } = useCart();
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
   const { name, price, quantity, imageUrl } = cartItem;
 
   return (
@@ -14,8 +18,14 @@ const CartItem = ({ cartItem }) => {
           {quantity} x ${price}
         </span>
         <span className="item-manage">
-          <button onClick={() => removeItemToCart(cartItem)}>-</button>
-          <button onClick={() => addItemToCart(cartItem)}>+</button>
+          <button
+            onClick={() => dispatch(removeItemToCart(cartItems, cartItem))}
+          >
+            -
+          </button>
+          <button onClick={() => dispatch(addItemToCart(cartItems, cartItem))}>
+            +
+          </button>
         </span>
       </div>
     </div>
