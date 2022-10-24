@@ -1,4 +1,7 @@
-import { addItemToCart, removeItemToCart } from "../../store/cart/cart.action";
+import {
+  addItemToCart,
+  removeItemFromCart,
+} from "../../store/cart/cart.action";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems } from "../../store/cart/cart.selector";
 
@@ -19,7 +22,7 @@ const CartItem = ({ cartItem }) => {
         </span>
         <span className="item-manage">
           <button
-            onClick={() => dispatch(removeItemToCart(cartItems, cartItem))}
+            onClick={() => dispatch(removeItemFromCart(cartItems, cartItem))}
           >
             -
           </button>

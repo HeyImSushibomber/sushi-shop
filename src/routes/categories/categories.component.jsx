@@ -9,6 +9,7 @@ import "./categories.styles.scss";
 
 const Categories = () => {
   const categoriesMap = useSelector(selectCategoriesMap);
+
   const { category } = useParams();
 
   const [products, setProducts] = useState(categoriesMap[category]);

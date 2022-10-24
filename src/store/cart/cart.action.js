@@ -38,7 +38,7 @@ export const addItemToCart = (cartItems, itemToAdd) => (dispatch) => {
   dispatch(setCartItems(newCartItems));
 };
 
-export const removeItemToCart = (cartItems, itemToRemove) => (dispatch) => {
+export const removeItemFromCart = (cartItems, itemToRemove) => (dispatch) => {
   const newCartItems = removeCartItem(cartItems, itemToRemove);
   dispatch(setCartItems(newCartItems));
 };

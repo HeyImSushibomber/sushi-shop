@@ -5,8 +5,8 @@ const selectCategoriesReducer = (state) => state.categories;
 
 export const selectCategories = createSelector(
   [selectCategoriesReducer],
-  (categoriesSlice) =>
-    categoriesSlice.categories.map((category) => {
+  (categories) =>
+    categories.categories.map((category) => {
       const { title, items } = category;
       return {
         title,
@@ -19,11 +19,16 @@ export const selectCategories = createSelector(
 
 export const selectCategoriesMap = createSelector(
   [selectCategoriesReducer],
-  (categoriesSlice) => {
-    return categoriesSlice.categories.reduce((acc, data) => {
+  (categories) => {
+    return categories.categories.reduce((acc, data) => {
       const { title, items } = data;
       acc[title.toLowerCase()] = items;
       return acc;
     }, {});
   }
+);
+
+export const selectCategoriesRequestState = createSelector(
+  [selectCategoriesReducer],
+  (categoriesSlice) => categoriesSlice.requestState
 );

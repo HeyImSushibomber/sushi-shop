@@ -1,6 +1,6 @@
 import {
   addItemToCart,
-  removeItemToCart,
+  removeItemFromCart,
   clearItemFromCart,
 } from "../../store/cart/cart.action";
 
@@ -13,6 +13,12 @@ const CheckoutItem = ({ cartItem }) => {
   const cartItems = useSelector(selectCartItems);
   const { name, imageUrl, price, quantity } = cartItem;
 
+  const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
+  const removeItemHandler = () =>
+    dispatch(removeItemFromCart(cartItems, cartItem));
+  const clearItemHandler = () =>
+    dispatch(clearItemFromCart(cartItems, cartItem));
+
   return (
     <div className="checkout-item-container">
       <div className="image-container">
@@ -21,25 +27,16 @@ const CheckoutItem = ({ cartItem }) => {
       <span className="name">{name}</span>
 
       <span className="quantity">
-        <div
-          className="arrow"
-          onClick={() => dispatch(removeItemToCart(cartItems, cartItem))}
-        >
+        <div className="arrow" onClick={removeItemHandler}>
           &#10094;
         </div>
         <span className="value">{quantity}</span>
-        <div
-          className="arrow"
-          onClick={() => dispatch(addItemToCart(cartItems, cartItem))}
-        >
+        <div className="arrow" onClick={addItemHandler}>
           &#10095;
         </div>
       </span>
       <span className="price">{price}</span>
-      <div
-        className="remove-button"
-        onClick={() => dispatch(clearItemFromCart(cartItems, cartItem))}
-      >
+      <div className="remove-button" onClick={clearItemHandler}>
         &#10005;
       </div>
     </div>
